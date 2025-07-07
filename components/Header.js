@@ -16,34 +16,34 @@ export default function Header({ name }) {
           Home
         </Link>
         <Link 
-          href="/categories/security-tools"
-          className="text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-        >
-          Security Tools
-        </Link>
-        <Link 
           href="/categories/ai-scams"
           className="text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
           AI Scams
         </Link>
         <Link 
-          href="/categories/faraday-bags"
+          href="/categories/phishing"
           className="text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
-          Faraday Bags
+          Phishing
         </Link>
         <Link 
-          href="/categories/router-reviews"
+          href="/categories/scam-alerts-&-news"
           className="text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
-          Router Reviews
+          Scam Alerts
         </Link>
         <Link 
-          href="/categories/privacy-guides"
+          href="/categories/privacy-and-security"
           className="text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
-          Privacy Guides
+          Privacy & Security
+        </Link>
+        <Link 
+          href="/categories/security-tools"
+          className="text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+        >
+          Security Tools
         </Link>
         <Link 
           href="/categories"
