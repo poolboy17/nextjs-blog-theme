@@ -14,9 +14,15 @@ export default function Index({ posts, categories, globalData }) {
       <SEO title={globalData.name} description={globalData.blogTitle} />
       <Header name={globalData.name} />
       <main className="w-full">
-        <h1 className="mb-12 text-3xl text-center lg:text-5xl">
-          {globalData.blogTitle}
-        </h1>
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent mb-4 leading-tight">
+            {globalData.blogTitle}
+          </h1>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-6"></div>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-medium">
+            Your trusted source for cybersecurity insights and scam prevention
+          </p>
+        </div>
 
         {/* Categories Navigation */}
         <div className="mb-8 text-center">

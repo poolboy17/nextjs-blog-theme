@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { getCategories, getPostsByCategory } from '../../utils/mdx-utils';
 import Footer from '../../components/Footer';
@@ -29,9 +28,12 @@ export default function CategoryPage({ posts, category, globalData }) {
             ← All Categories
           </Link>
         </div>
-        <h1 className="mb-12 text-3xl text-center lg:text-5xl">
-          {displayCategory}
-        </h1>
+        <div className="mb-12 text-center">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 via-blue-600 to-purple-600 dark:from-indigo-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent mb-4 leading-tight">
+            {displayCategory}
+          </h1>
+          <div className="w-20 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
+        </div>
         <p className="text-center text-gray-600 dark:text-gray-400 mb-8">
           {posts.length} {posts.length === 1 ? 'post' : 'posts'} in this category
         </p>
@@ -95,7 +97,7 @@ export async function getStaticProps({ params }) {
   const displayCategory = category.split('-').map(word => 
     word.charAt(0).toUpperCase() + word.slice(1)
   ).join(' ');
-  
+
   const posts = getPostsByCategory(displayCategory);
   const globalData = getGlobalData();
 

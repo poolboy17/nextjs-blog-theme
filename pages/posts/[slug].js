@@ -48,7 +48,7 @@ export default function PostPage({
       <article className="px-6 md:px-0" data-sb-object-id={`posts/${slug}.mdx`}>
         <header>
           <h1
-            className="mb-8 text-3xl text-center md:text-5xl dark:text-white"
+            className="mb-8 text-3xl text-center md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent leading-tight"
             data-sb-field-path="title"
           >
             {frontMatter.title}

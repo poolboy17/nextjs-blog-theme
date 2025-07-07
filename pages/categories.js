@@ -12,7 +12,12 @@ export default function Categories({ categories, categoryCounts, globalData }) {
       <SEO title={`Categories - ${globalData.name}`} description="Browse posts by category" />
       <Header name={globalData.name} />
       <main className="w-full">
-        <h1 className="mb-12 text-3xl text-center lg:text-5xl">Categories</h1>
+        <div className="mb-12 text-center">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-green-600 via-teal-600 to-blue-600 dark:from-green-400 dark:via-teal-400 dark:to-blue-400 bg-clip-text text-transparent mb-4 leading-tight">
+            Categories
+          </h1>
+          <div className="w-20 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto rounded-full"></div>
+        </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <Link
