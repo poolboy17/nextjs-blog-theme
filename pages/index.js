@@ -24,15 +24,7 @@ export default function Index({ posts, categories, globalData }) {
           </p>
         </div>
 
-        {/* Categories Navigation */}
-        <div className="mb-8 text-center">
-          <Link 
-            href="/categories"
-            className="inline-block px-6 py-3 text-lg bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Browse Categories ({categories.length})
-          </Link>
-        </div>
+        
 
         <ul className="w-full">
           {posts.map((post) => (
