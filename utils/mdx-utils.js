@@ -28,7 +28,9 @@ export const sortPostsByDate = (posts) => {
     ...post,
     data: {
       ...post.data,
-      date: post.data.date instanceof Date ? post.data.date.toISOString() : post.data.date
+      date: typeof post.data.date === 'string' ? post.data.date : 
+            post.data.date instanceof Date ? post.data.date.toISOString() : 
+            new Date(post.data.date).toISOString()
     }
   }));
 };
