@@ -28,22 +28,27 @@ export const sortPostsByDate = (posts) => {
     ...post,
     data: {
       ...post.data,
-      date: typeof post.data.date === 'string' ? post.data.date : new Date(post.data.date).toISOString()
+      date: post.data.date instanceof Date ? post.data.date.toISOString() : post.data.date
     }
   }));
 };
 
 export const getPosts = () => {
-  let posts = getPostFilePaths().map((filePath) => {
-    const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
-    const { content, data } = matter(source);
+  let posts = getPostFilePaths()
+    .filter((filePath) => {
+      // Only include files that actually exist
+      return fs.existsSync(path.join(POSTS_PATH, filePath));
+    })
+    .map((filePath) => {
+      const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
+      const { content, data } = matter(source);
 
-    return {
-      content,
-      data,
-      filePath,
-    };
-  });
+      return {
+        content,
+        data,
+        filePath,
+      };
+    });
 
   posts = sortPostsByDate(posts);
 
@@ -80,6 +85,12 @@ export const getPostsByCategory = (category) => {
 
 export const getPostBySlug = async (slug) => {
   const postFilePath = path.join(POSTS_PATH, `${slug}.mdx`);
+  
+  // Check if file exists
+  if (!fs.existsSync(postFilePath)) {
+    throw new Error(`Post file not found: ${postFilePath}`);
+  }
+  
   const source = fs.readFileSync(postFilePath);
 
   const { content, data } = matter(source);
