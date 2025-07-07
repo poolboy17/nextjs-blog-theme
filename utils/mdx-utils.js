@@ -44,6 +44,34 @@ export const getPosts = () => {
   return posts;
 };
 
+export const getCategories = () => {
+  const posts = getPosts();
+  const categories = new Set();
+  
+  posts.forEach(post => {
+    if (post.data.categories) {
+      if (Array.isArray(post.data.categories)) {
+        post.data.categories.forEach(category => categories.add(category));
+      } else {
+        categories.add(post.data.categories);
+      }
+    }
+  });
+  
+  return Array.from(categories).sort();
+};
+
+export const getPostsByCategory = (category) => {
+  const posts = getPosts();
+  return posts.filter(post => {
+    if (!post.data.categories) return false;
+    if (Array.isArray(post.data.categories)) {
+      return post.data.categories.includes(category);
+    }
+    return post.data.categories === category;
+  });
+};
+
 export const getPostBySlug = async (slug) => {
   const postFilePath = path.join(POSTS_PATH, `${slug}.mdx`);
   const source = fs.readFileSync(postFilePath);

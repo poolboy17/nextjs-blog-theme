@@ -48,16 +48,42 @@ export default function PostPage({
       <article className="px-6 md:px-0" data-sb-object-id={`posts/${slug}.mdx`}>
         <header>
           <h1
-            className="mb-12 text-3xl text-center md:text-5xl dark:text-white"
+            className="mb-8 text-3xl text-center md:text-5xl dark:text-white"
             data-sb-field-path="title"
           >
             {frontMatter.title}
           </h1>
           {frontMatter.description && (
-            <p className="mb-4 text-xl" data-sb-field-path="description">
+            <p className="mb-4 text-xl text-center" data-sb-field-path="description">
               {frontMatter.description}
             </p>
           )}
+          <div className="mb-8 text-center">
+            {frontMatter.date && (
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Published on {frontMatter.date}
+              </p>
+            )}
+            {frontMatter.categories && (
+              <div className="mb-4">
+                <span className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                  Category: {Array.isArray(frontMatter.categories) ? frontMatter.categories.join(', ') : frontMatter.categories}
+                </span>
+              </div>
+            )}
+            {frontMatter.tags && (
+              <div className="flex flex-wrap gap-2 justify-center">
+                {frontMatter.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
         </header>
         <main>
           <article

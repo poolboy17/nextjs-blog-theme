@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getPosts } from '../utils/mdx-utils';
+import { getPosts, getCategories } from '../utils/mdx-utils';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -8,7 +8,7 @@ import ArrowIcon from '../components/ArrowIcon';
 import { getGlobalData } from '../utils/global-data';
 import SEO from '../components/SEO';
 
-export default function Index({ posts, globalData }) {
+export default function Index({ posts, categories, globalData }) {
   return (
     <Layout>
       <SEO title={globalData.name} description={globalData.blogTitle} />
@@ -17,6 +17,17 @@ export default function Index({ posts, globalData }) {
         <h1 className="mb-12 text-3xl text-center lg:text-5xl">
           {globalData.blogTitle}
         </h1>
+        
+        {/* Categories Navigation */}
+        <div className="mb-8 text-center">
+          <Link 
+            href="/categories"
+            className="inline-block px-6 py-3 text-lg bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Browse Categories ({categories.length})
+          </Link>
+        </div>
+        
         <ul className="w-full">
           {posts.map((post) => (
             <li
@@ -48,6 +59,30 @@ export default function Index({ posts, globalData }) {
                     {post.data.description}
                   </p>
                 )}
+                {post.data.categories && (
+                  <div className="mt-3">
+                    <span className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                      Category: {Array.isArray(post.data.categories) ? post.data.categories.join(', ') : post.data.categories}
+                    </span>
+                  </div>
+                )}
+                {post.data.tags && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {post.data.tags.slice(0, 5).map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {post.data.tags.length > 5 && (
+                      <span className="px-2 py-1 text-xs text-gray-500 dark:text-gray-400">
+                        +{post.data.tags.length - 5} more
+                      </span>
+                    )}
+                  </div>
+                )}
                 <ArrowIcon className="mt-4" />
               </Link>
             </li>
@@ -69,7 +104,8 @@ export default function Index({ posts, globalData }) {
 
 export function getStaticProps() {
   const posts = getPosts();
+  const categories = getCategories();
   const globalData = getGlobalData();
 
-  return { props: { posts, globalData } };
+  return { props: { posts, categories, globalData } };
 }
