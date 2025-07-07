@@ -40,12 +40,6 @@ export default function Header({ name }) {
         >
           Security Tools
         </Link>
-        <Link 
-          href="/categories"
-          className="text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
-        >
-          All Categories
-        </Link>
       </nav>
     </header>
   );
