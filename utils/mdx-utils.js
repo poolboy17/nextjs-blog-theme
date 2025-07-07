@@ -24,7 +24,13 @@ export const sortPostsByDate = (posts) => {
     const aDate = new Date(a.data.date);
     const bDate = new Date(b.data.date);
     return bDate - aDate;
-  });
+  }).map(post => ({
+    ...post,
+    data: {
+      ...post.data,
+      date: typeof post.data.date === 'string' ? post.data.date : post.data.date.toISOString()
+    }
+  }));
 };
 
 export const getPosts = () => {
