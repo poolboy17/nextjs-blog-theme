@@ -1,6 +1,6 @@
 ---
 title: How to Freeze a Senior’s Credit to Prevent Fraud
-date: 2025-07-06T00:00:00.000Z
+date: '2025-07-06T00:00:00.000Z'
 draft: false
 description: >-
   This page previously served as a pillar resource. The content is being
