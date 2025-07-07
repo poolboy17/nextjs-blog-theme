@@ -17,7 +17,7 @@ export default function Index({ posts, categories, globalData }) {
         <h1 className="mb-12 text-3xl text-center lg:text-5xl">
           {globalData.blogTitle}
         </h1>
-        
+
         {/* Categories Navigation */}
         <div className="mb-8 text-center">
           <Link 
@@ -27,7 +27,7 @@ export default function Index({ posts, categories, globalData }) {
             Browse Categories ({categories.length})
           </Link>
         </div>
-        
+
         <ul className="w-full">
           {posts.map((post) => (
             <li

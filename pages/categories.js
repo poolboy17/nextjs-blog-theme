@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { getCategories, getPostsByCategory } from '../utils/mdx-utils';
 import Footer from '../components/Footer';
@@ -45,7 +44,7 @@ export default function Categories({ categories, categoryCounts, globalData }) {
 export function getStaticProps() {
   const categories = getCategories();
   const globalData = getGlobalData();
-  
+
   const categoryCounts = {};
   categories.forEach(category => {
     categoryCounts[category] = getPostsByCategory(category).length;
