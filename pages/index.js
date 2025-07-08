@@ -26,17 +26,17 @@ export default function Index({ posts, categories, globalData }) {
 
         
 
-        <ul className="w-full">
-          {posts.map((post) => (
+        <ul className="w-full grid md:grid-cols-2 gap-6">
+          {posts.slice(0, 8).map((post) => (
             <li
               key={post.filePath}
-              className="transition border border-b-0 bg-white/10 border-gray-800/10 md:first:rounded-t-lg md:last:rounded-b-lg backdrop-blur-lg dark:bg-black/30 hover:bg-white/20 dark:hover:bg-black/50 dark:border-white/10 last:border-b"
+              className="transition border border-gray-800/10 bg-white/10 rounded-lg backdrop-blur-lg dark:bg-black/30 hover:bg-white/20 dark:hover:bg-black/50 dark:border-white/10"
               data-sb-object-id={`posts/${post.filePath}`}
             >
               <Link
                 as={`/posts/${post.filePath.replace(/\.mdx?$/, '')}`}
                 href={`/posts/[slug]`}
-                className="block px-6 py-6 lg:py-10 lg:px-16 focus:outline-hidden focus:ring-4 focus:ring-primary/50"
+                className="block px-6 py-6 focus:outline-hidden focus:ring-4 focus:ring-primary/50 h-full"
               >
                 {post.data.date && (
                   <p
