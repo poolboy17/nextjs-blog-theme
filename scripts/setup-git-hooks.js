@@ -11,13 +11,24 @@ node scripts/auto-commit.js
 `;
 
 const preCommitHook = `#!/bin/sh
-# Pre-commit hook to run linting and formatting
+# Pre-commit hook to run auto-fix, linting and formatting
 echo "🔍 Running pre-commit checks..."
+
+# Auto-fix syntax issues
+echo "🤖 Auto-fixing syntax issues..."
+npm run fix:syntax --silent
 
 # Run ESLint
 npm run lint --silent
 if [ $? -ne 0 ]; then
-  echo "❌ ESLint failed. Please fix the issues before committing."
+  echo "❌ ESLint failed. Please fix the remaining issues before committing."
+  exit 1
+fi
+
+# Run tests
+npm run test:ci --silent
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Please fix the issues before committing."
   exit 1
 fi
 

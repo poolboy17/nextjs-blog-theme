@@ -10,3 +10,23 @@ run = ["sh", "-c", "npm run dev"]
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[workflows]
+
+[[workflows.workflow]]
+name = "AI Auto-Fixer"
+author = 35541320
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node scripts/background-fixer.js"
+
+[[workflows.workflow]]
+name = "AI Auto-Fixer"
+author = 35541320
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node scripts/background-fixer.js"
