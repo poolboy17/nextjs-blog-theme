@@ -45,8 +45,3 @@ export function getPostImageUrl(post) {
 export function getPlaceholderImage() {
   return '/images/placeholder-security.svg';
 }
-
-export function getPostImageUrl(post) {
-  // Alias for getImageForPost for backward compatibility
-  return getImageForPost(post);
-}
