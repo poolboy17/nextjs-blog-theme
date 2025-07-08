@@ -1,6 +1,7 @@
 
+// Simple image utilities for static blog posts
 export function getImageForPost(post) {
-  // Use local placeholder images based on post content
+  // Map keywords to local SVG images
   const imageMap = {
     'ai': '/images/ai-security.svg',
     'antivirus': '/images/antivirus-protection.svg',
@@ -16,9 +17,14 @@ export function getImageForPost(post) {
     'shield': '/images/security-shield.svg'
   };
 
-  // Check title and tags for keywords
-  const title = post.title?.toLowerCase() || '';
-  const tags = post.tags?.join(' ').toLowerCase() || '';
+  if (!post) {
+    return '/images/cybersecurity-default.svg';
+  }
+
+  // Get post content to search for keywords
+  const title = (post.title || post.data?.title || '').toLowerCase();
+  const tags = Array.isArray(post.tags) ? post.tags.join(' ').toLowerCase() : 
+               Array.isArray(post.data?.tags) ? post.data.tags.join(' ').toLowerCase() : '';
   const content = `${title} ${tags}`;
 
   // Find matching image based on keywords
@@ -28,7 +34,6 @@ export function getImageForPost(post) {
     }
   }
 
-  // Default fallback
   return '/images/cybersecurity-default.svg';
 }
 
@@ -38,5 +43,5 @@ export function getPostImageUrl(post) {
 }
 
 export function getPlaceholderImage() {
-  return '/images/placeholder-security.jpg';
+  return '/images/placeholder-security.svg';
 }
