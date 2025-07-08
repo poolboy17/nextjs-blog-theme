@@ -3,14 +3,9 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['via.placeholder.com'],
+    // Allow local images and any future image hosting you might add
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'via.placeholder.com',
-        port: '',
-        pathname: '/**',
-      },
+      // Add external image patterns here if needed in the future
     ],
   },
 }
