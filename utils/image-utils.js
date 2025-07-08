@@ -1,36 +1,34 @@
 
 export function getImageForPost(post) {
-  // Use local placeholder images instead of external API calls
+  // Use local placeholder images based on post content
   const imageMap = {
-    'cybersecurity': '/images/cybersecurity-1.svg',
-    'security': '/images/security-shield.svg',
-    'privacy': '/images/privacy-security.svg',
-    'antivirus': '/images/antivirus-protection.svg',
-    'router': '/images/router-security.svg',
-    'wifi': '/images/router-security.svg',
-    'protection': '/images/data-protection.svg',
-    'scam': '/images/scam-detection.svg',
-    'phishing': '/images/email-security.svg',
     'ai': '/images/ai-security.svg',
+    'antivirus': '/images/antivirus-protection.svg',
+    'cyber': '/images/cyber-defense.svg',
+    'security': '/images/cybersecurity-1.svg',
+    'privacy': '/images/privacy-security.svg',
+    'protection': '/images/data-protection.svg',
+    'email': '/images/email-security.svg',
     'identity': '/images/identity-protection.svg',
-    'malware': '/images/cyber-defense.svg',
-    'vpn': '/images/privacy-tools.svg',
-    'email': '/images/email-security.svg'
+    'router': '/images/router-security.svg',
+    'scam': '/images/scam-detection.svg',
+    'tools': '/images/privacy-tools.svg',
+    'shield': '/images/security-shield.svg'
   };
 
-  // Extract keywords from title and tags
-  const title = post.data.title?.toLowerCase() || '';
-  const tags = post.data.tags || [];
-  const allText = [title, ...tags.map(tag => tag.toLowerCase())].join(' ');
+  // Check title and tags for keywords
+  const title = post.title?.toLowerCase() || '';
+  const tags = post.tags?.join(' ').toLowerCase() || '';
+  const content = `${title} ${tags}`;
 
   // Find matching image based on keywords
   for (const [keyword, imagePath] of Object.entries(imageMap)) {
-    if (allText.includes(keyword)) {
+    if (content.includes(keyword)) {
       return imagePath;
     }
   }
 
-  // Default fallback image
+  // Default fallback
   return '/images/cybersecurity-default.svg';
 }
 
