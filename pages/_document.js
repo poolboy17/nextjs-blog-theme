@@ -10,20 +10,20 @@ class MyDocument extends Document {
       <Html lang="en" className="theme-compiled">
         <Head>
           <style>{`:root{${cssVars}}`}</style>
-          
+
           {/* Performance optimizations */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link rel="dns-prefetch" href="https://images.unsplash.com" />
           <link rel="dns-prefetch" href="https://via.placeholder.com" />
-          
+
           {/* PWA manifest */}
           <link rel="manifest" href="/manifest.json" />
           <meta name="theme-color" content="#7d7aff" />
-          
+
           {/* Favicon */}
           <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-          
+
           {/* Critical CSS for above-the-fold content */}
           <style dangerouslySetInnerHTML={{
             __html: `
