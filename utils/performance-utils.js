@@ -1,3 +1,4 @@
+
 // Performance monitoring utilities
 export const measurePerformance = (name, fn) => {
   return async (...args) => {
@@ -13,7 +14,6 @@ export const measurePerformance = (name, fn) => {
   };
 };
 
-// Web Vitals reporting
 export const reportWebVitals = (metric) => {
   if (process.env.NODE_ENV === 'production') {
     // Report to analytics service
@@ -24,65 +24,30 @@ export const reportWebVitals = (metric) => {
       window.gtag('event', metric.name, {
         event_category: 'Web Vitals',
         event_label: metric.id,
-        value: Math.round(metric.value),
+        value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
         non_interaction: true,
       });
     }
   }
 };
 
-// Preload critical resources
-export const preloadResource = (href, as = 'script', type = null) => {
-  if (typeof document !== 'undefined') {
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.href = href;
-    link.as = as;
-    if (type) link.type = type;
-    document.head.appendChild(link);
-  }
-};
-
-// Lazy load images with intersection observer
-export const lazyLoadImages = () => {
-  if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.classList.remove('lazy');
-          imageObserver.unobserve(img);
-        }
-      });
-    });
-
-    document.querySelectorAll('img[data-src]').forEach((img) => {
-      imageObserver.observe(img);
-    });
-  }
-};
-
-// Critical CSS inlining helper
-export const inlineCriticalCSS = (css) => {
+// Add CSS for smooth animations
+export const addPerformanceStyles = () => {
   if (typeof document !== 'undefined') {
     const style = document.createElement('style');
-    style.textContent = css;
+    style.textContent = `
+      .perf-optimized {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        will-change: transform;
+      }
+    `;
     document.head.appendChild(style);
   }
 };
 
-// Add performance monitoring utilities here
-export function measurePagePerformance(label, fn) {
-  const start = performance.now();
-  const result = fn();
-  const end = performance.now();
-  console.log(`${label}: ${end - start} milliseconds`);
-  return result;
-}
-
-// Optimize large data sets for better performance
-export function paginateData(data, page = 1, pageSize = 10) {
+// Optimized pagination for large datasets
+export function paginateData(data, page = 1, pageSize = 12) {
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   return {
@@ -93,15 +58,56 @@ export function paginateData(data, page = 1, pageSize = 10) {
   };
 }
 
-// Reduce data size by removing unnecessary fields
-export function optimizePostData(posts) {
+// Optimize post data for article cards - remove heavy content
+export function optimizeArticleCards(posts) {
   return posts.map(post => ({
-    slug: post.slug,
-    title: post.title,
-    description: post.description,
-    date: post.date,
-    category: post.category,
-    // Remove heavy content for list views
-    excerpt: post.content?.substring(0, 200) || post.description
+    filePath: post.filePath,
+    data: {
+      title: post.data.title,
+      description: post.data.description?.substring(0, 160) || '', // SEO-friendly length
+      date: post.data.date,
+      categories: post.data.categories,
+      tags: post.data.tags?.slice(0, 5) || [], // Limit tags for performance
+      image: post.data.image,
+      author: post.data.author,
+      readTime: post.data.readTime || calculateReadTime(post.data.description || ''),
+    },
+    excerpt: post.data.description?.substring(0, 120) || '', // Card preview length
   }));
+}
+
+// Calculate estimated read time
+export function calculateReadTime(content) {
+  const wordsPerMinute = 200;
+  const wordCount = content.split(/\s+/).length;
+  const minutes = Math.ceil(wordCount / wordsPerMinute);
+  return `${minutes} min read`;
+}
+
+// Lazy loading utility for images
+export function createIntersectionObserver(callback, options = {}) {
+  const defaultOptions = {
+    root: null,
+    rootMargin: '50px',
+    threshold: 0.1,
+    ...options
+  };
+
+  if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+    return new IntersectionObserver(callback, defaultOptions);
+  }
+  return null;
+}
+
+// Optimize images for cards
+export function getOptimizedImageUrl(imagePath, width = 400, height = 300) {
+  if (!imagePath) return '/images/placeholder-security.svg';
+  
+  // For static images, return as-is
+  if (imagePath.startsWith('/images/')) {
+    return imagePath;
+  }
+  
+  // For dynamic images, could add optimization params
+  return imagePath;
 }
