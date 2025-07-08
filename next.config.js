@@ -1,4 +1,3 @@
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -15,7 +14,7 @@ const withPWA = require('next-pwa')({
 const nextConfig = {
   reactStrictMode: true,
   compress: true,
-  
+
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
@@ -50,6 +49,7 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['react', 'react-dom'],
+    largePageDataBytes: 512 * 1000, // Increase threshold to 512kb
   },
 
   // Headers for better caching

@@ -1,15 +1,14 @@
-
 // Performance monitoring utilities
 export const measurePerformance = (name, fn) => {
   return async (...args) => {
     const start = performance.now();
     const result = await fn(...args);
     const end = performance.now();
-    
+
     if (process.env.NODE_ENV === 'development') {
       console.log(`⚡ ${name}: ${(end - start).toFixed(2)}ms`);
     }
-    
+
     return result;
   };
 };
@@ -19,7 +18,7 @@ export const reportWebVitals = (metric) => {
   if (process.env.NODE_ENV === 'production') {
     // Report to analytics service
     console.log('Web Vital:', metric);
-    
+
     // Example: Send to Google Analytics
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('event', metric.name, {
@@ -72,3 +71,37 @@ export const inlineCriticalCSS = (css) => {
     document.head.appendChild(style);
   }
 };
+
+// Add performance monitoring utilities here
+export function measurePerformance(label, fn) {
+  const start = performance.now();
+  const result = fn();
+  const end = performance.now();
+  console.log(`${label}: ${end - start} milliseconds`);
+  return result;
+}
+
+// Optimize large data sets for better performance
+export function paginateData(data, page = 1, pageSize = 10) {
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  return {
+    data: data.slice(startIndex, endIndex),
+    totalPages: Math.ceil(data.length / pageSize),
+    currentPage: page,
+    hasMore: endIndex < data.length
+  };
+}
+
+// Reduce data size by removing unnecessary fields
+export function optimizePostData(posts) {
+  return posts.map(post => ({
+    slug: post.slug,
+    title: post.title,
+    description: post.description,
+    date: post.date,
+    category: post.category,
+    // Remove heavy content for list views
+    excerpt: post.content?.substring(0, 200) || post.description
+  }));
+}
