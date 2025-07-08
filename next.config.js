@@ -14,7 +14,6 @@ const withPWA = require('next-pwa')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   compress: true,
   
   // Image optimization
@@ -122,9 +121,7 @@ const nextConfig = {
       },
     };
 
-    // Tree shake unused code
-    config.optimization.usedExports = true;
-
+    // Tree shaking is handled automatically by Next.js in production
     return config;
   },
 };
