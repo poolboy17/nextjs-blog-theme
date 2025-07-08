@@ -9,6 +9,7 @@ import {
 import { MDXRemote } from 'next-mdx-remote';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image';
 import ArrowIcon from '../../components/ArrowIcon';
 import CustomImage from '../../components/CustomImage';
 import CustomLink from '../../components/CustomLink';
@@ -57,6 +58,17 @@ export default function PostPage({
             <p className="mb-4 text-xl text-center" data-sb-field-path="description">
               {frontMatter.description}
             </p>
+          )}
+          {frontMatter.image && (
+            <div className="relative w-full h-64 md:h-80 mb-8 rounded-lg overflow-hidden">
+              <Image
+                src={frontMatter.image}
+                alt={frontMatter.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 800px"
+              />
+            </div>
           )}
           <div className="mb-8 text-center">
             {frontMatter.date && (

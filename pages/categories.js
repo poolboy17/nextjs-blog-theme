@@ -46,13 +46,20 @@ export default function Categories({ categories, categoryCounts, globalData }) {
   );
 }
 
-export function getStaticProps() {
+export async function getStaticProps() {
   const categories = getCategories();
   const globalData = getGlobalData();
+  const allPosts = await getPosts();
 
   const categoryCounts = {};
   categories.forEach(category => {
-    categoryCounts[category] = getPostsByCategory(category).length;
+    categoryCounts[category] = allPosts.filter(post => {
+      if (!post.data.categories) return false;
+      if (Array.isArray(post.data.categories)) {
+        return post.data.categories.includes(category);
+      }
+      return post.data.categories === category;
+    }).length;
   });
 
   return { 

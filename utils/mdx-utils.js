@@ -5,6 +5,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import rehypePrism from '@mapbox/rehype-prism';
 import remarkGfm from 'remark-gfm';
 import rehypeUnwrapImages from 'rehype-unwrap-images';
+import { fetchPostImage } from './image-utils.js';
 
 // POSTS_PATH is useful when you want to get the path to a specific file
 export const POSTS_PATH = path.join(process.cwd(), 'posts');
@@ -35,7 +36,7 @@ export const sortPostsByDate = (posts) => {
   }));
 };
 
-export const getPosts = () => {
+export const getPosts = async () => {
   let posts = getPostFilePaths()
     .filter((filePath) => {
       // Only include files that actually exist
@@ -53,6 +54,18 @@ export const getPosts = () => {
     });
 
   posts = sortPostsByDate(posts);
+
+  // Fetch images for posts that don't have them
+  for (let i = 0; i < Math.min(posts.length, 12); i++) {
+    const post = posts[i];
+    if (!post.data.image) {
+      const imageData = await fetchPostImage(post.data.title, post.data.tags);
+      if (imageData) {
+        post.data.image = imageData.thumbnail || imageData.url;
+        post.data.imageSource = imageData.source;
+      }
+    }
+  }
 
   return posts;
 };

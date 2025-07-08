@@ -98,7 +98,14 @@ export async function getStaticProps({ params }) {
     word.charAt(0).toUpperCase() + word.slice(1)
   ).join(' ');
 
-  const posts = getPostsByCategory(displayCategory);
+  const allPosts = await getPosts();
+  const posts = allPosts.filter(post => {
+    if (!post.data.categories) return false;
+    if (Array.isArray(post.data.categories)) {
+      return post.data.categories.includes(displayCategory);
+    }
+    return post.data.categories === displayCategory;
+  });
   const globalData = getGlobalData();
 
   return {

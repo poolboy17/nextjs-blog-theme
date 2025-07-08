@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPosts, getCategories } from '../utils/mdx-utils';
+import { getPostImageUrl } from '../utils/image-utils';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -36,8 +38,18 @@ export default function Index({ posts, categories, globalData }) {
               <Link
                 as={`/posts/${post.filePath.replace(/\.mdx?$/, '')}`}
                 href={`/posts/[slug]`}
-                className="block px-6 py-6 focus:outline-hidden focus:ring-4 focus:ring-primary/50 h-full"
+                className="block focus:outline-hidden focus:ring-4 focus:ring-primary/50 h-full overflow-hidden"
               >
+                <div className="relative w-full h-48 mb-4">
+                  <Image
+                    src={post.data.image || getPostImageUrl(post)}
+                    alt={post.data.title}
+                    fill
+                    className="object-cover rounded-t-lg"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="px-6 py-6">
                 {post.data.date && (
                   <p
                     className="mb-3 font-bold uppercase opacity-60"
@@ -82,6 +94,7 @@ export default function Index({ posts, categories, globalData }) {
                   </div>
                 )}
                 <ArrowIcon className="mt-4" />
+                </div>
               </Link>
             </li>
           ))}
@@ -100,8 +113,8 @@ export default function Index({ posts, categories, globalData }) {
   );
 }
 
-export function getStaticProps() {
-  const posts = getPosts();
+export async function getStaticProps() {
+  const posts = await getPosts();
   const categories = getCategories();
   const globalData = getGlobalData();
 

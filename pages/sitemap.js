@@ -128,8 +128,8 @@ export default function Sitemap({ globalData, posts, categories }) {
   );
 }
 
-export function getStaticProps() {
-  const posts = getPosts();
+export async function getStaticProps() {
+  const posts = await getPosts();
   const categories = getCategories();
   const globalData = getGlobalData();
 
