@@ -47,6 +47,28 @@ export const getPosts = () => {
       const { content, data } = matter(source);
 
       return {
+        // Don't include full content for listing pages to reduce bundle size
+        content: content.slice(0, 200) + '...', // Just excerpt for listings
+        data,
+        filePath,
+      };
+    });
+
+  posts = sortPostsByDate(posts);
+  return posts;
+};
+
+// New function to get posts with full content (for individual post pages)
+export const getPostsWithFullContent = () => {
+  let posts = getPostFilePaths()
+    .filter((filePath) => {
+      return fs.existsSync(path.join(POSTS_PATH, filePath));
+    })
+    .map((filePath) => {
+      const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
+      const { content, data } = matter(source);
+
+      return {
         content,
         data,
         filePath,

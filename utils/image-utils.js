@@ -1,47 +1,99 @@
 
-// Simple image utilities for static blog posts
+// Image utility functions for the blog
 export function getImageForPost(post) {
-  // Map keywords to local SVG images
-  const imageMap = {
-    'ai': '/images/ai-security.svg',
-    'antivirus': '/images/antivirus-protection.svg',
-    'cyber': '/images/cyber-defense.svg',
-    'security': '/images/cybersecurity-1.svg',
-    'privacy': '/images/privacy-security.svg',
-    'protection': '/images/data-protection.svg',
-    'email': '/images/email-security.svg',
-    'identity': '/images/identity-protection.svg',
-    'router': '/images/router-security.svg',
-    'scam': '/images/scam-detection.svg',
-    'tools': '/images/privacy-tools.svg',
-    'shield': '/images/security-shield.svg'
-  };
-
-  if (!post) {
-    return '/images/cybersecurity-default.svg';
+  // Check if post has a custom image
+  if (post?.data?.image) {
+    return post.data.image;
   }
-
-  // Get post content to search for keywords
-  const title = (post.title || post.data?.title || '').toLowerCase();
-  const tags = Array.isArray(post.tags) ? post.tags.join(' ').toLowerCase() : 
-               Array.isArray(post.data?.tags) ? post.data.tags.join(' ').toLowerCase() : '';
-  const content = `${title} ${tags}`;
-
-  // Find matching image based on keywords
-  for (const [keyword, imagePath] of Object.entries(imageMap)) {
-    if (content.includes(keyword)) {
-      return imagePath;
+  
+  // Check if post has a title to generate themed image
+  if (post?.data?.title) {
+    const title = post.data.title.toLowerCase();
+    
+    // Security-related keywords
+    if (title.includes('scam') || title.includes('phishing') || title.includes('fraud')) {
+      return '/images/scam-detection.svg';
+    }
+    if (title.includes('ai') || title.includes('artificial intelligence')) {
+      return '/images/ai-security.svg';
+    }
+    if (title.includes('antivirus') || title.includes('malware')) {
+      return '/images/antivirus-protection.svg';
+    }
+    if (title.includes('router') || title.includes('wifi') || title.includes('network')) {
+      return '/images/router-security.svg';
+    }
+    if (title.includes('privacy') || title.includes('vpn')) {
+      return '/images/privacy-tools.svg';
+    }
+    if (title.includes('email') || title.includes('mail')) {
+      return '/images/email-security.svg';
+    }
+    if (title.includes('identity') || title.includes('personal data')) {
+      return '/images/identity-protection.svg';
+    }
+    if (title.includes('cyber') || title.includes('security')) {
+      return '/images/cyber-defense.svg';
+    }
+    if (title.includes('data') || title.includes('protection')) {
+      return '/images/data-protection.svg';
     }
   }
-
-  return '/images/cybersecurity-default.svg';
+  
+  // Default fallback
+  return '/images/placeholder-security.svg';
 }
 
-// Legacy function name for backward compatibility
+// Alias for backward compatibility
 export function getPostImageUrl(post) {
   return getImageForPost(post);
 }
 
-export function getPlaceholderImage() {
-  return '/images/placeholder-security.svg';
+// Generate category-specific images
+export function getCategoryImage(category) {
+  if (!category) return '/images/cybersecurity-default.svg';
+  
+  const categoryLower = category.toLowerCase();
+  
+  if (categoryLower.includes('scam') || categoryLower.includes('fraud')) {
+    return '/images/scam-detection.svg';
+  }
+  if (categoryLower.includes('ai')) {
+    return '/images/ai-security.svg';
+  }
+  if (categoryLower.includes('antivirus')) {
+    return '/images/antivirus-protection.svg';
+  }
+  if (categoryLower.includes('router') || categoryLower.includes('network')) {
+    return '/images/router-security.svg';
+  }
+  if (categoryLower.includes('privacy')) {
+    return '/images/privacy-tools.svg';
+  }
+  
+  return '/images/cybersecurity-default.svg';
+}
+
+// Validate image URL
+export function validateImageUrl(url) {
+  if (!url) return false;
+  
+  // Check for local images
+  if (url.startsWith('/images/')) {
+    return true;
+  }
+  
+  // Check for allowed external domains
+  const allowedDomains = [
+    'via.placeholder.com',
+    'images.unsplash.com',
+    'cdn.jsdelivr.net'
+  ];
+  
+  try {
+    const urlObj = new URL(url);
+    return allowedDomains.includes(urlObj.hostname);
+  } catch {
+    return false;
+  }
 }

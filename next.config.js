@@ -3,9 +3,25 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    // Allow local images and any future image hosting you might add
     remotePatterns: [
-      // Add external image patterns here if needed in the future
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.jsdelivr.net',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 }
