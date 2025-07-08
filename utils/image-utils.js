@@ -1,3 +1,4 @@
+
 export function getImageForPost(post) {
   // Use local placeholder images instead of external API calls
   const imageMap = {
@@ -31,6 +32,11 @@ export function getImageForPost(post) {
 
   // Default fallback image
   return '/images/cybersecurity-default.svg';
+}
+
+// Legacy function name for backward compatibility
+export function getPostImageUrl(post) {
+  return getImageForPost(post);
 }
 
 export function getPlaceholderImage() {
