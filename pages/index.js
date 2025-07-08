@@ -27,7 +27,7 @@ export default function Index({ posts, categories, globalData }) {
         
 
         <ul className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.slice(0, 12).map((post) => (
+          {posts.filter(post => post.data.title && post.data.date).slice(0, 12).map((post) => (
             <li
               key={post.filePath}
               className="transition border border-gray-800/10 bg-white/10 rounded-lg backdrop-blur-lg dark:bg-black/30 hover:bg-white/20 dark:hover:bg-black/50 dark:border-white/10"
