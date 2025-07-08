@@ -1,0 +1,30 @@
+
+{
+  "name": "Cybersecurity Blog",
+  "short_name": "CyberBlog",
+  "description": "Your trusted source for cybersecurity news and guides",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7d7aff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["news", "technology", "security"],
+  "lang": "en",
+  "orientation": "portrait-primary"
+}

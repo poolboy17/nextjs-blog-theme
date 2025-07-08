@@ -1,15 +1,14 @@
-
 // Image utility functions for the blog
 export function getImageForPost(post) {
   // Check if post has a custom image
   if (post?.data?.image) {
     return post.data.image;
   }
-  
+
   // Check if post has a title to generate themed image
   if (post?.data?.title) {
     const title = post.data.title.toLowerCase();
-    
+
     // Security-related keywords
     if (title.includes('scam') || title.includes('phishing') || title.includes('fraud')) {
       return '/images/scam-detection.svg';
@@ -39,22 +38,22 @@ export function getImageForPost(post) {
       return '/images/data-protection.svg';
     }
   }
-  
+
   // Default fallback
   return '/images/placeholder-security.svg';
 }
 
-// Alias for backward compatibility
 export function getPostImageUrl(post) {
-  return getImageForPost(post);
+    // Alias for getImageForPost for backward compatibility
+    return getImageForPost(post);
 }
 
 // Generate category-specific images
 export function getCategoryImage(category) {
   if (!category) return '/images/cybersecurity-default.svg';
-  
+
   const categoryLower = category.toLowerCase();
-  
+
   if (categoryLower.includes('scam') || categoryLower.includes('fraud')) {
     return '/images/scam-detection.svg';
   }
@@ -70,26 +69,26 @@ export function getCategoryImage(category) {
   if (categoryLower.includes('privacy')) {
     return '/images/privacy-tools.svg';
   }
-  
+
   return '/images/cybersecurity-default.svg';
 }
 
 // Validate image URL
 export function validateImageUrl(url) {
   if (!url) return false;
-  
+
   // Check for local images
   if (url.startsWith('/images/')) {
     return true;
   }
-  
+
   // Check for allowed external domains
   const allowedDomains = [
     'via.placeholder.com',
     'images.unsplash.com',
     'cdn.jsdelivr.net'
   ];
-  
+
   try {
     const urlObj = new URL(url);
     return allowedDomains.includes(urlObj.hostname);
