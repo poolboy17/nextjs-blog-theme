@@ -19,7 +19,11 @@
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
-    "lint": "next lint"
+    "lint": "next lint",
+    "git:setup": "node scripts/setup-git-hooks.js",
+    "git:commit": "node scripts/auto-commit.js",
+    "git:auto": "npm run git:commit && echo 'Auto-commit completed'",
+    "dev:auto": "npm run git:setup && npm run dev"
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.9.0",
