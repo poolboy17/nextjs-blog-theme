@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const sunIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +82,60 @@ const ThemeSwitcher = () => {
 export default function Footer({ copyrightText }) {
   return (
     <footer className="flex flex-col items-center py-16">
+      {/* Footer Navigation */}
+      <nav className="mb-8">
+        <ul className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+          <li>
+            <Link 
+              href="/"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link 
+              href="/categories"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Categories
+            </Link>
+          </li>
+          <li>
+            <Link 
+              href="/privacy"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </li>
+          <li>
+            <Link 
+              href="/terms"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Terms of Service
+            </Link>
+          </li>
+          <li>
+            <Link 
+              href="/contact"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link 
+              href="/sitemap"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Sitemap
+            </Link>
+          </li>
+        </ul>
+      </nav>
+
       <p className="mb-3 font-bold uppercase dark:text-white opacity-60">
         {copyrightText}
       </p>
