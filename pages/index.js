@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getPosts, getCategories } from '../utils/mdx-utils';
+import { getPostsForListing, getCategories } from '../utils/mdx-utils';
 import { getPostImageUrl } from '../utils/image-utils';
 
 import Footer from '../components/Footer';
@@ -29,7 +29,7 @@ export default function Index({ posts, categories, globalData }) {
 
 
         <ul className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.filter(post => post.data.title && post.data.date).slice(0, 12).map((post) => (
+          {posts.map((post) => (
             <li
               key={post.filePath}
               className="transition border border-gray-800/10 bg-white/10 rounded-lg backdrop-blur-lg dark:bg-black/30 hover:bg-white/20 dark:hover:bg-black/50 dark:border-white/10"
@@ -114,9 +114,13 @@ export default function Index({ posts, categories, globalData }) {
 }
 
 export async function getStaticProps() {
-  const posts = await getPosts();
+  const posts = getPostsForListing(12); // Only get 12 posts with minimal data
   const categories = getCategories();
   const globalData = getGlobalData();
 
-  return { props: { posts, categories, globalData } };
+  return { 
+    props: { posts, categories, globalData },
+    // Add revalidation for better performance
+    revalidate: 3600 // Revalidate every hour
+  };
 }

@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -47,8 +46,7 @@ export const getPosts = () => {
       const { content, data } = matter(source);
 
       return {
-        // Don't include full content for listing pages to reduce bundle size
-        content: content.slice(0, 200) + '...', // Just excerpt for listings
+        content,
         data,
         filePath,
       };
@@ -56,6 +54,26 @@ export const getPosts = () => {
 
   posts = sortPostsByDate(posts);
   return posts;
+};
+
+// Optimized version for homepage - only metadata, no content
+export const getPostsForListing = (limit = 12) => {
+  const postFilePaths = getPostFilePaths();
+  return postFilePaths
+    .map((filePath) => {
+      const source = fs.readFileSync(path.join(POSTS_PATH, filePath));
+      const { data } = matter(source); // Don't parse content
+
+      return {
+        data,
+        filePath,
+        // Only include excerpt, not full content
+        excerpt: data.description || '',
+      };
+    })
+    .filter(post => post.data.title && post.data.date)
+    .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+    .slice(0, limit);
 };
 
 // New function to get posts with full content (for individual post pages)
@@ -82,7 +100,7 @@ export const getPostsWithFullContent = () => {
 export const getCategories = () => {
   const posts = getPosts();
   const categories = new Set();
-  
+
   posts.forEach(post => {
     if (post.data.categories) {
       if (Array.isArray(post.data.categories)) {
@@ -92,7 +110,7 @@ export const getCategories = () => {
       }
     }
   });
-  
+
   return Array.from(categories).sort();
 };
 
@@ -109,12 +127,12 @@ export const getPostsByCategory = (category) => {
 
 export const getPostBySlug = async (slug) => {
   const postFilePath = path.join(POSTS_PATH, `${slug}.mdx`);
-  
+
   // Check if file exists
   if (!fs.existsSync(postFilePath)) {
     throw new Error(`Post file not found: ${postFilePath}`);
   }
-  
+
   const source = fs.readFileSync(postFilePath);
 
   const { content, data } = matter(source);
@@ -129,6 +147,24 @@ export const getPostBySlug = async (slug) => {
   });
 
   return { mdxSource, data, postFilePath };
+};
+
+// Get minimal post data for performance
+export const getPostMetadata = async (slug) => {
+    const postFilePath = path.join(POSTS_PATH, `${slug}.mdx`);
+
+    // Check if file exists
+    if (!fs.existsSync(postFilePath)) {
+      throw new Error(`Post file not found: ${postFilePath}`);
+    }
+
+    const source = fs.readFileSync(postFilePath);
+    const { data } = matter(source); // Only parse metadata
+
+    return {
+        data,
+        postFilePath
+    };
 };
 
 export const getNextPostBySlug = (slug) => {
