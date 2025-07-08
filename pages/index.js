@@ -26,7 +26,7 @@ export default function Index({ posts, categories, globalData }) {
           </p>
         </div>
 
-        
+
 
         <ul className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.filter(post => post.data.title && post.data.date).slice(0, 12).map((post) => (
