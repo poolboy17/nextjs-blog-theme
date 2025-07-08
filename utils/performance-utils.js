@@ -73,7 +73,7 @@ export const inlineCriticalCSS = (css) => {
 };
 
 // Add performance monitoring utilities here
-export function measurePerformance(label, fn) {
+export function measurePagePerformance(label, fn) {
   const start = performance.now();
   const result = fn();
   const end = performance.now();
