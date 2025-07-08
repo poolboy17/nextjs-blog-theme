@@ -29,7 +29,6 @@
     "next": "^15.1.4",
     "next-mdx-remote": "^5.0.0",
     "next-remote-watch": "2.0.0",
-    "node-fetch": "^3.3.2",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
